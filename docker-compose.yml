@@ -1,0 +1,25 @@
+version: "2"
+services:
+
+  pep-mongocfg:
+    container_name: pep-mongocfg
+    image: mongo:3.6.5
+    command: mongod --configsvr --replSet mongocfg --bind_ip_all --port 27019
+    volumes:
+      - ./data/mongocfg:/data/db
+  pep-mongoshard:
+    container_name: pep-mongoshard
+    image: mongo:3.6.5
+    command: mongod --shardsvr --replSet mongoshard --bind_ip_all --port 27018
+    volumes:
+      - ./data/mongoshard:/data/db
+    ports:
+      - "27018:27018"
+  pep-mongos:
+    container_name: pep-mongos
+    image: mongo:3.6.5
+    command: mongos --configdb mongocfg/pep-mongocfg:27019 --bind_ip_all
+    volumes:
+      - ./data/mongos:/data/db
+    ports:
+      - "27017:27017"
