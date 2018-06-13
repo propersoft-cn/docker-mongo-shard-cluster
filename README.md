@@ -15,7 +15,7 @@ Setup Cluster
 This will pull MongoDB v3.6.5 image and run all the containers.
 
 ```
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 You will need to run the following once only to initialize all replica sets and shard data across them
@@ -27,5 +27,5 @@ $ ./init.sh
 You should now be able connect to pep-mongos and the new sharded cluster from the mongos container itself using the mongo shell to connect to the running mongos process
 
 ```
-docker exec -it pep-mongos mongo --port 21017
+docker exec -it pep-mongos mongo --port 27017
 ```
